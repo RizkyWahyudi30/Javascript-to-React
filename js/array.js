@@ -99,6 +99,7 @@ const filtPrice = products.filter((prod) => prod.price > 1000000);
 console.log(filtPrice);
 
 const discountProd = products.map((prod) => ({
+  // ({ .. }) namanya = Implicit Return for Object Literals.
   ...prod,
   price: prod.price * 0.9,
 }));
@@ -110,3 +111,54 @@ console.log(searchProd);
 
 const updateProd = products.filter((prod) => prod.id !== 2);
 console.log(updateProd);
+
+// ---------------------- COBA LAGI -------------------------
+const students = ["Andi", "Budi", "Citra", "Doni", "Ani", "Rizky"];
+
+students.forEach((student) => console.log(`nama: ${student}`));
+
+const upperStudent = students.map((student) => student.toUpperCase());
+console.log(upperStudent);
+
+const takeStudent = students.filter((student) => student.length > 4);
+console.log(takeStudent);
+
+const takeSpecial = students.filter((student) => student.includes("i"));
+console.log(takeSpecial);
+
+const splitStudent = students.filter((student) => student !== "Budi");
+console.log(splitStudent);
+
+const newFormat = students.map((student, index) => `${index + 1}. ${student}`);
+console.log(newFormat);
+
+const product = [
+  { id: 1, name: "Laptop", price: 15000000 },
+  { id: 2, name: "Mouse", price: 150000 },
+  { id: 3, name: "Keyboard", price: 350000 },
+  { id: 4, name: "Monitor", price: 2500000 },
+];
+
+const nameProd = product.map((prod) => prod.name);
+console.log(nameProd);
+
+const priceProd = product.filter((prod) => prod.price > 1000000);
+console.log(priceProd);
+
+const discount = product.map((prod) => ({
+  // ({ .. }) namanya = Implicit Return for Object Literals.
+  ...prod,
+  price: prod.price * 0.9, // price: -> adalah properti, key -> price: , value nya sisanya
+}));
+console.log(discount);
+
+const selectProd = product.filter((prod) => prod.id !== 2);
+console.log(selectProd);
+
+const searchName = product.filter((prod) => prod.name.includes("o"));
+console.log(searchName);
+
+const filtProd = product
+  .filter((prod) => prod.price > 300000)
+  .map((prod) => `${prod.name} - Rp${prod.price}`);
+console.log(filtProd);
