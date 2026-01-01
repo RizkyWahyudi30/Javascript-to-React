@@ -1,0 +1,19 @@
+Konsep dasar react dari fundemntal js (by WPU) :
+#1 Hoisting
+#2 Scope
+#3 Template String
+=> tambahan : array 
+                properti : .length()
+                method : push(), pop(), shift(), unshift(), forEach(), map(), filter()
+=> tambahan : spread operator 
+=> tambahan : rest parameter 
+#4 Destructuring & restructing
+#5 Function => first-class func, declarative/expressive/arrow func, pure func
+=> tambahan : default parameter 
+#6 Higher-order Function
+#7 Callback Function
+8 Promise
+#9 Async & Await
+#10 fetch()
+
+
