@@ -5,8 +5,7 @@ Konsep dasar react dari fundemntal js (by WPU) :
 => tambahan : array 
                 properti : .length()
                 method : push(), pop(), shift(), unshift(), forEach(), map(), filter()
-=> tambahan : spread operator 
-=> tambahan : rest parameter 
+=> tambahan : spread operator & rest parameter
 #4 Destructuring & restructing
 #5 Function => first-class func, declarative/expressive/arrow func, pure func
 => tambahan : default parameter 
@@ -17,3 +16,34 @@ Konsep dasar react dari fundemntal js (by WPU) :
 #10 fetch()
 
 
+// info saja 
+method string yang sering dipakai :
+1. pencarian validasi :
+    - includes(): Mengecek apakah ada kata / huruf tertentu di dalam string (hasilnya true/false).
+    - startsWith() / endsWith(): Mengecek apakah string diawali atau diakhiri kata tertentu.
+2. Memotong & Mengambil string :
+    - slice(start, end): Mengambil bagian string dari index tertentu.
+    - substring(): Mirip slice, tapi slice lebih fleksibel (bisa pakai angka negatif).
+3. Pembersihan & Pengubahan :
+    - trim(): Menghapus spasi di awal dan akhir (wajib digunakan saat validasi form).
+    - toLowerCase() / toUpperCase(): Mengubah huruf besar/kecil (sering digabung dengan .includes() agar pencarian tidak sensitif huruf).
+4. Memecah & Menggabung (Bridge to Array)
+    - split(): Memecah string menjadi Array.
+    - replace() / replaceAll(): Mengganti kata tertentu.
+
+
+/** POLA REACT **/
+// render
+data.map()
+
+// search
+data.filter()
+
+// delete
+data.filter()
+
+// update
+data.map()
+
+// add
+[...data, newItem]
