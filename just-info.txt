@@ -5,10 +5,12 @@ Konsep dasar react dari fundemntal js (by WPU) :
 => tambahan : array 
                 properti : .length()
                 method : push(), pop(), shift(), unshift(), forEach(), map(), filter()
-=> tambahan : spread operator & rest parameter
+            : object     
+
+=> tambahan : spread operator 
+=> tambahan : default parameter & rest parameter 
 #4 Destructuring & restructing
 #5 Function => first-class func, declarative/expressive/arrow func, pure func
-=> tambahan : default parameter 
 #6 Higher-order Function
 #7 Callback Function
 8 Promise
