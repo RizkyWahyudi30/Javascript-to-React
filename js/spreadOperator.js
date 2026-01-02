@@ -79,3 +79,58 @@ function tambah(a, b, c) {
 }
 const param = [2, 4, 1];
 console.log(tambah(...param));
+
+// ================= Latihan ======================
+const students = ["Andi", "Budi", "Citra"];
+
+const studentsCopy = ["Ani", ...students, "Doni"]; // menambahkan data ke depan dan belakang array
+console.log(studentsCopy);
+
+const newStudents = ["Rizky", "Fajar"];
+
+const addStudent = [...studentsCopy, ...newStudents];
+console.log(addStudent);
+
+// ini namanya destructuring
+// const [satu, dua, tiga, empat, lima, enam, tujuh] = addStudent;
+
+// const dataBaru = [dua, tiga, "eka", empat];
+// console.log(dataBaru);
+
+// Cara lebih aman
+const dataBaru = [...addStudent.slice(0, 2), "Eka", ...addStudent.slice(2)];
+console.log(dataBaru);
+
+const cekData = [...addStudent.slice(0, 2), "Eka", addStudent[2]];
+console.log(cekData);
+
+const allUser = {
+  id: 1,
+  name: "Andi",
+  age: 20,
+};
+
+const newData = {
+  ...allUser,
+  age: 21,
+  role: "admin",
+  city: "Jakarta",
+  country: "Indonesia",
+};
+console.log(newData);
+console.log(allUser);
+
+const products = [
+  { id: 1, name: "Laptop", price: 15000000 },
+  { id: 2, name: "Mouse", price: 150000 },
+];
+
+const newProd = { id: 3, name: "Keyboard", price: 350000 };
+
+const addProd = [...products, newProd];
+console.log(addProd);
+
+const updateProd = addProd.map((prod) =>
+  prod.id === 2 ? { ...prod, price: 200000 } : prod
+);
+console.log(updateProd);
