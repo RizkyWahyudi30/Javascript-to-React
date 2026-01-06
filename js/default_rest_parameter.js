@@ -117,3 +117,77 @@ function buatUser(name, role = "user", ...skills) {
   };
 }
 console.log(buatUser("Andi", "admin", "JS", "React"));
+
+const products = [
+  { id: 1, name: "Laptop", price: 15000000 },
+  { id: 2, name: "Mouse", price: 150000 },
+];
+
+const updatePrice = (id, newPrice, items) =>
+  items.map((item) => (item.id === id ? { ...item, price: newPrice } : item));
+console.log(updatePrice(2, 200000, products));
+console.log(products);
+
+function Button({ text = "submit", ...props }) {
+  return {
+    Text: text,
+    Props: props,
+  };
+}
+console.log(Button({ text: "Login", type: "submit", color: "blue" }));
+console.log(Button({ type: "submit", color: "blue" }));
+
+// -------- latihan tambahan aja ----------
+const prices = [10, 20, 30, 40];
+
+// cara 1
+const toRupiah = () => prices.map((price) => price * 15000);
+console.log(toRupiah());
+
+// cara 2
+const toRupiah2 = prices.map((price) => price * 15000);
+console.log(toRupiah2);
+
+// coba kita buah agar nilai array nya langsung dikirim, bukan diambil
+// cara 3
+const toRupiah3 = (...items) => items.map((item) => item * 15000);
+console.log(toRupiah3(10, 20, 30, 40));
+
+// cara 4
+const toRupiah4 = (items) => items.map((item) => item * 15000);
+console.log(toRupiah4([10, 20, 30, 40]));
+
+// HASILNYA SAMA SEMUA
+
+const users = [
+  { id: 1, name: "Andi", age: 15, email: "andi@mail.com" },
+  { id: 2, name: "Budi", age: 20, email: "budi@mail.com" },
+  { id: 3, name: "Caca", age: 25, email: "caca@mail.com" },
+];
+
+const returnUser = users
+  .filter(({ age }) => age >= 18) // pakai desctructing, karena lebih simpel aja
+  .map(({ name, email, ...data }) => ({
+    name: name,
+    email: email,
+    ...data,
+    status: "Verified",
+  }));
+console.log(returnUser);
+
+function hitungTotal(...items) {
+  return items.reduce((jumlah, total) => jumlah + total, 0);
+}
+console.log(hitungTotal(1000, 2000, 3000));
+
+function updateStock({ id, name, stock, ...rest }) {
+  return {
+    id: id,
+    namaProduk: name,
+    stock: stock + 5,
+    ...rest,
+  };
+}
+console.log(
+  updateStock({ id: 101, name: "Laptop", stock: 10, color: "Silver" })
+);
