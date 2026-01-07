@@ -147,3 +147,54 @@ const usn = {}; // kalau ini ada isinya, berarti pakai yang ini
 // yang default value yang ini
 const { username = "Rizky" } = usn;
 console.log(username);
+
+// soal 4 -> skipping elements
+const colors = ["red", "yellow", "green", "blue"];
+
+const [elem1, , elem3] = colors;
+console.log(elem1);
+console.log(elem3);
+
+// soal 5 -> rest operator di array
+const players = ["Andi", "Budi", "Caca", "Dedi"];
+
+const [winner, ...others] = players;
+console.log(winner);
+console.log(others);
+
+// soal 6 -> Nested object
+const employee = {
+  name: "Budi",
+  address: {
+    city: "Bandung",
+    zip: 4013,
+  },
+};
+const {
+  address: { city: kotaAsal },
+} = employee;
+console.log(kotaAsal);
+
+// soal 7 -> array di dalam object
+const person = {
+  nama: "Siska",
+  hobbies: ["Reading", "Gaming", "Cooking"],
+};
+
+const {
+  hobbies: [, elem2],
+} = person;
+console.log(elem2);
+
+// soal 8 -> destructuring parameter
+const tampilkanInfo = ({ judul, penulis }) => {
+  console.log(`Buku ${judul} ditulis oleh ${penulis}`);
+};
+
+tampilkanInfo({ judul: "Laskar pelangi", penulis: "Andrea Hirata" });
+
+// soal 9 -> destructuring dalam map
+const products = [
+  { id: 1, name: "Laptop", stock: 10 },
+  { id: 2, name: "Mouse", stock: 5 },
+];
