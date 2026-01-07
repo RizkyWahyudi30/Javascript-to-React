@@ -198,3 +198,25 @@ const products = [
   { id: 1, name: "Laptop", stock: 10 },
   { id: 2, name: "Mouse", stock: 5 },
 ];
+
+const checkProd = products.map(({ name }) => name);
+console.log(checkProd);
+
+// soal 10 -> desttructuring kompleks
+const apiResponse = [
+  {
+    id: 1,
+    location: {
+      coords: { lat: -6.2, lng: 106.8 },
+    },
+  },
+];
+
+const [
+  {
+    location: {
+      coords: { lat: latitude, lng: longitude },
+    },
+  },
+] = apiResponse;
+console.log(latitude, longitude);
