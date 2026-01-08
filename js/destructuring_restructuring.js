@@ -220,3 +220,65 @@ const [
   },
 ] = apiResponse;
 console.log(latitude, longitude);
+
+// soal 11 -> nested object, rename, default
+const dataUser = {
+  id: 1,
+  profile: {
+    username: "rizky",
+    email: "rizky@gmail.com",
+  },
+};
+
+const {
+  profile: { username: names, email },
+  role = "user",
+} = dataUser;
+console.log(names, email, role);
+
+// soal 12 -> array, skip, rest
+const scores = [90, 80, 70, 60, 50];
+
+const [firstScore, , ...restScore] = scores;
+console.log(firstScore);
+console.log(restScore);
+
+// soal 13 -> destructuring parameter
+const printOrder = ({ product, price, qty = 1 }) => {
+  console.log(`Order: ${product} | Qty: ${qty} | Total: ${price * qty}`);
+};
+printOrder({ product: "Laptop", qty: 2, price: 15000000 });
+
+// soal 14 -> desctruturing, rest
+const settings = { theme: "dark", language: "id", layout: "grid", debug: true };
+
+const { theme, ...otherSettings } = settings;
+console.log(theme);
+console.log(otherSettings);
+
+// soal 15 -> api style response
+const response = {
+  status: 200,
+  data: {
+    user: {
+      id: 1,
+      name: "Andi",
+      address: {
+        city: "Jakarta",
+        country: "Indonesia",
+      },
+    },
+  },
+};
+
+const {
+  data: {
+    user: {
+      name,
+      address: { city, country },
+    },
+  },
+} = response;
+console.log(name);
+console.log(city);
+console.log(country);
