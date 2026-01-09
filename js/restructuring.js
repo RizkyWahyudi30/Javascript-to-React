@@ -414,10 +414,13 @@ const response3 = {
   },
 };
 
-// const {
-//   data: {
-//     posts: { idRes, titleRes, author },
-//   },
-// } = response3;
+const {
+  data: { posts },
+} = response3;
 
-// const resPon3 = response3.
+const resPon3 = posts.map(({ idRes, titleRes, author: { name } }) => ({
+  id: idRes,
+  title: titleRes,
+  author: name,
+}));
+console.log(resPon3);
