@@ -196,7 +196,7 @@ console.log(updateUsers);
 const responseAPI = {
   data: {
     post: {
-      id: 10,
+      idU: 10,
       title: "Belajar React",
       author: {
         name: "Rizky",
@@ -208,7 +208,7 @@ const responseAPI = {
 
 // pakai restructuring, lebih simpel
 const restrucResponse = {
-  id: responseAPI.data.post.id,
+  id: responseAPI.data.post.idU,
   title: responseAPI.data.post.title,
   authorName: responseAPI.data.post.author.name,
 };
@@ -220,7 +220,7 @@ console.log(restrucResponse);
 const {
   data: {
     post: {
-      id,
+      idU,
       title,
       author: { name },
     },
@@ -231,7 +231,7 @@ const {
 
 // pakai restructuring lagi
 const listResponse = {
-  id: id,
+  id: idU,
   title: title,
   authorName: name,
 };
@@ -243,11 +243,181 @@ console.log(listResponse);
 // soal 6 -> React components
 const props = {
   post: {
-    id: 1,
-    title: "Belajar laravel",
-    author: {
-      name: "Sandi",
-      email: "sandi@gmail.com",
+    ids: 1,
+    titles: "Belajar laravel",
+    authors: {
+      names: "Sandi",
+      emails: "sandi@gmail.com",
     },
   },
 };
+
+// pakai destructuring
+const {
+  post: {
+    ids,
+    titles,
+    authors: { names },
+  },
+} = props;
+
+// pakai restructuring
+const upList = {
+  id: ids,
+  title: titles,
+  author: names,
+};
+console.log(upList);
+
+// soal 7 -> API Response List
+const respAPI = {
+  data: {
+    users: [
+      { id: 1, full_name: "Andi", role: "admin" },
+      { id: 2, full_name: "Budi", role: "user" },
+    ],
+  },
+};
+
+// pakai explicit return
+const res = respAPI.data.users.map(({ id, full_name }) => ({
+  id: id,
+  name: `${full_name}`,
+}));
+console.log(res);
+
+// soal 8 -> useState initial value
+const ApiUser = {
+  id: 1,
+  username: "rizky",
+  email: "rizky@gmail.com",
+};
+
+// hanya pakai restructuring
+const resApi = {
+  id: ApiUser.id,
+  name: ApiUser.username,
+  isLogin: true,
+};
+
+// saya gatau maksudnya pakai useState initial value, bisakah kamu berikan aku contohnya
+
+// soal 9 -> update state
+const dataUsers = [
+  { id: 1, name: "Andi", active: false },
+  { id: 2, name: "Budi", active: false },
+];
+
+const data = dataUsers.map((data) => {
+  return data.id === 1 ? { ...data, active: true } : data;
+});
+console.log(data);
+
+// kalau ada pengkondisian tidak usah seperti : => ({ ... })
+const data2 = dataUsers.map((data) =>
+  // ini menggunakan implicit return
+  data.id === 1 ? { ...data, active: true } : data
+);
+
+// soal 10 -> Filter + restructuring
+const product2 = [
+  { id: 1, name: "Iphone", price: 21000000 },
+  { id: 2, name: "Jam tangan", price: 45000 },
+];
+
+const filterPrice = product2
+  .filter((data) => data.price > 500000)
+  .map(({ id, name, price }) => ({
+    id: id,
+    label: `${name} - ${price}`,
+  }));
+console.log(filterPrice);
+
+// soal 11 -> destructuring parameter (component)
+function ProductCard({ id, name, price }) {
+  // return `Id: ${id} | Nama produk: ${name} - price: ${price}`;
+
+  return {
+    id: id,
+    product: `${name} - ${price}`,
+  };
+}
+
+const prodCard = product2
+  .filter(({ price }) => price > 500000)
+  .map((item) => ProductCard(item));
+console.log(prodCard);
+// output nya : [ { id: 1, product: 'Iphone - 21000000' } ]
+
+// atau menggunakan ini :
+function ProductCard2(props) {
+  const { id, name, price } = props;
+
+  return {
+    id: id,
+    name_product: name,
+    price_product: price,
+  };
+}
+const prodCard2 = product2
+  .filter(({ price }) => price > 500000)
+  .map((item) => ProductCard2(item));
+console.log(prodCard2);
+// output : [ { id: 1, name_product: 'Iphone', price_product: 21000000 } ]
+
+// soal 12 -> API Nested + Rename
+const response2 = {
+  data: {
+    order: {
+      order_id: 10,
+      total_price: 500000,
+    },
+  },
+};
+
+const {
+  data: {
+    order: { order_id: id, total_price: total },
+  },
+} = response2;
+
+console.log({ id, total });
+
+// soal 13 -> Remove Sensitive Field
+const user2 = {
+  id: 1,
+  name: "Rizky",
+  passwordU: "12345",
+};
+
+const { passwordU, ...otherData } = user2;
+console.log(otherData);
+
+// soal 14 -> Combine Props + Default Value
+const props2 = {
+  title2: "Dashboard",
+};
+
+const { title2, role = "user" } = props2;
+console.log({ title2, role });
+
+// soal 15 ->
+const response3 = {
+  data: {
+    posts: [
+      {
+        idRes: 1,
+        titleRes: "React",
+        author: { name: "Rizky" },
+      },
+    ],
+  },
+};
+
+// const {
+//   data: {
+//     posts: { idRes, titleRes, author },
+//   },
+// } = response3;
+
+// const resPon3 = response3.
