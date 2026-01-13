@@ -315,58 +315,70 @@ const spreadRunTwice = (fn, ...args) => {
 
 const tambah2 = (a, b) => a + b;
 
-console.log(spreadRunTwice(tambah2, 5, 10));
+console.log(spreadRunTwice(tambah2, 5, 3));
 
 // soal 7
 function createDiscount(percent) {
   return (price) => {
     const discount = price * (percent / 100);
-    const cost = price + discount;
-    return `Harga akhir: ${cost}`;
+    const cost = price - discount;
+    return cost;
   };
 }
 
 const disc = createDiscount(20);
 console.log(disc(30000));
 
-// soal 8
-function withLog(a) {
-  return (b) => {
-    const hitung = a + b;
-    console.log(hitung);
+// soal 8 -> wrapper function
+function withLog(fn) {
+  return (...args) => {
+    console.log("Running function");
+    return fn(...args);
   };
 }
 
-const hitung = withLog(4);
-hitung(5);
+const kali2 = (a, b) => a * b;
+
+const kaliwithlog = withLog(kali2);
+console.log(kaliwithlog(6, 10));
 
 // soal 9
 const validatorUser = function ({ username, password }) {
-  return username.length >= 5 && password.toString().length >= 8;
+  return username.length >= 5 && password.length >= 8;
 };
 console.log(validatorUser({ username: "Wahyu", password: 2010 }));
 
 // soal 10
-const executeIf = (condition) => {
-  return (...fn) => {
-    // if (typeof condition === "number") {
-    //   return `hasilnya: ${fn}`;
-    // } else {
-    //   return `error!`;
-    // }
+// const executeIf = (condition) => {
+//   return (...fn) => {
+//     // if (typeof condition === "number") {
+//     //   return `hasilnya: ${fn}`;
+//     // } else {
+//     //   return `error!`;
+//     // }
 
-    const validator = fn.every((n) => typeof n === "number");
+//     const validator = fn.every((n) => typeof n === "number");
 
-    if (!validator) return "error!";
+//     if (!validator) return "error!";
 
-    return `hasilnya: ${condition(...fn)}`;
-  };
+//     return `hasilnya: ${condition(...fn)}`;
+//   };
+// };
+
+// const tambah = (a, b) => a + b;
+
+// const addExecute = executeIf(tambah);
+// console.log(addExecute(5, 10));
+
+const executeIf = (condition, fn) => {
+  if (condition) fn();
 };
 
-const tambah = (a, b) => a + b;
+console.log("Test 1");
+executeIf(true, () => console.log("True. Running!"));
 
-const addExecute = executeIf(tambah);
-console.log(addExecute(5, 10));
+console.log("Test 2");
+executeIf(false, () => console.log("False. Not Running"));
 
 // soal 11
 const updateUserActive = (users, targetID) => {
@@ -391,7 +403,7 @@ console.log("Data baru: ", update);
 // soal 12
 const mapToOptions = (users) => {
   return users.map((user) => {
-    return { value: user.id, label: { ...user } };
+    return { value: user.id, label: user.name };
   });
 };
 
@@ -426,9 +438,9 @@ console.log(toggleButton(true));
 console.log(toggleButton(false));
 
 // soal 15
-const composeGreeting = (greeting) => {
+const composeGreeting = (formatter) => {
   return (name) => {
-    return `${greeting}, ${name}`;
+    return `Halo, ${formatter(name)}`;
   };
 };
 
