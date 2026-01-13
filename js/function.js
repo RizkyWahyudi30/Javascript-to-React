@@ -444,5 +444,23 @@ const composeGreeting = (formatter) => {
   };
 };
 
-const formatter = composeGreeting("Halo");
-console.log(formatter("rizal"));
+const kapital = (text) => text.toUpperCase();
+
+const formatter = composeGreeting(kapital);
+console.log(formatter("Rizal"));
+
+// soal lagi
+// ----------------------
+
+// Soal 1. First class function (callback sederhana)
+const runCallback = (fn, value) => {
+  return fn(value);
+};
+
+const upperText = (text) => text.toUpperCase();
+
+const toUpper = runCallback(upperText, "React");
+console.log(toUpper);
+
+// soal 2. HOF: Formatter (React style props)
+const createFormatter = (prefix) => {};
