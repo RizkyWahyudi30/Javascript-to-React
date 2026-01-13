@@ -16,6 +16,7 @@ Konsep dasar react dari fundemntal js (by WPU) :
 8 Promise
 #9 Async & Await
 #10 fetch()
+#11 axios 
 
 
 // info saja 
