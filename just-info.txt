@@ -11,9 +11,9 @@ Konsep dasar react dari fundemntal js (by WPU) :
 => tambahan : default parameter & rest parameter 
 #4 Destructuring & restructing
 #5 Function => first-class func, declarative/expressive/arrow func, pure func
-#6 Higher-order Function
-#7 Callback Function
-8 Promise
+#6 Callback Function
+#7 Higher-order Function
+#8 Promise
 #9 Async & Await
 #10 fetch()
 #11 axios 
