@@ -463,21 +463,19 @@ const toUpper = runCallback(upperText, "React");
 console.log(toUpper);
 
 // soal 2. HOF: Formatter (React style props)
-const createFormatter = (fn, prefix) => {
+const createFormatter = (prefix) => {
   return (text) => {
-    return `${fn(prefix)}: ${text}`;
+    return `${prefix}: ${text}`;
   };
 };
 
-const isiTeks = (teks) => teks.toUpperCase();
-
-const fnPref = createFormatter(isiTeks, "info");
+const fnPref = createFormatter("INFO");
 console.log(fnPref("Data berhasil disimpan"));
 
 // soal 3. HOF + Array Map
-const mapUsers = (fn, users) => {
+const mapUsers = (formatter, users) => {
   return users.map((user) => {
-    return fn(user);
+    return formatter(user);
   });
 };
 
@@ -498,29 +496,27 @@ console.log(kirimArray);
 const UserCard = ({ id, name, isActive }) => {
   return {
     key: id,
-    label: `${name} ${isActive}`,
+    label: `${name} (${isActive ? "active" : "non-active"})`,
   };
 };
 
 console.log(UserCard({ id: 1, name: "Oping", isActive: true }));
 
 // soal 5. HOF: Conditional Executor
-const executeValid = (validatorFn, value) => {
-  if (typeof value === "string") {
-    return validatorFn(value);
-  }
+const executeValid = (validatorFn) => {
+  return (value) => {
+    if (typeof value === "string") {
+      return validatorFn(value);
+    }
 
-  return `Gagal`;
+    return `Gagal`;
+  };
 };
 
 const splitValue = (teks) => teks.split(" ");
 
-const sendFn = executeValid(
-  splitValue,
-  "Hello world, im a programmer fullstack"
-  // 123343
-);
-console.log(sendFn);
+const sendFn = executeValid(splitValue);
+console.log(sendFn("Hello world, im a programmer fullstack"));
 
 // soal 6. Rest Parameter + Reduce
 const sumAll = (...number) => {
@@ -550,23 +546,25 @@ console.log(sendProd);
 
 // soal 8. HOF: withLogger (Wrapper Function)
 const withLogger = (fn) => {
-  return (args) => {
-    return fn(args);
+  return (...args) => {
+    console.log("Function dijalankan");
+    return fn(...args);
   };
 };
 
 const toUpIndex = (teks) => teks.charAt(0).toUpperCase();
 
 const sendLog = withLogger(toUpIndex);
-console.log(sendLog("Function dijalankan"));
+console.log(sendLog("react"));
 
 // soal 9. Filter + Map + Restructuring
-const filterRes = (dataOrder, idOrder) => {
+const filterRes = (dataOrder) => {
   return dataOrder
-    .filter((dataFilter) => dataFilter.id === idOrder)
-    .map((data) => {
-      return data;
-    });
+    .filter((dataFilter) => dataFilter.status === "paid")
+    .map(({ id, total }) => ({
+      orderId: id,
+      orderTotal: total,
+    }));
 };
 
 const orders = [
@@ -574,7 +572,7 @@ const orders = [
   { id: 2, total: 200000, status: "pending" },
 ];
 
-const sendOrder = filterRes(orders, 1);
+const sendOrder = filterRes(orders);
 console.log(sendOrder);
 
 // soal 10. Simulasi React setState (Mental Model)
