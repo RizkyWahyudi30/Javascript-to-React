@@ -135,9 +135,12 @@ function handleData(result) {
 fecthData(handleData);
 
 /**
- * function handleData() : tidak dipanggil langsung karena callback nya baru dibuat dibawah fecthData
+ * function handleData() : tidak dipanggil langsung agar fetchData lebih fleksibel dan supatya bisa digtanti callback lain
  *
  * Callback : fetchData(callback)
+ *
+ * Callback itu adalah function yang dikirim, bukan yang dijalankan
+ *
  */
 
 // soal 4.
@@ -194,15 +197,15 @@ formatText("hello world", function (text) {
 
 // soal 8.
 function validateNumber(number, callback) {
-  callback(number);
-}
-
-validateNumber(123, function (number) {
   if (typeof number === "number") {
-    console.log(number);
+    callback(number);
   } else {
     console.log("not a number");
   }
+}
+
+validateNumber(123, function (number) {
+  console.log(number);
 });
 
 // soal 9.
@@ -220,6 +223,6 @@ function setState(newState, callback) {
   callback(newState);
 }
 
-setState(() => {
-  console.log("new state to updated");
+setState({ count: 1 }, ({ count }) => {
+  console.log(`New state: ${count}`);
 });
