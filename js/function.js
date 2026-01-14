@@ -463,4 +463,136 @@ const toUpper = runCallback(upperText, "React");
 console.log(toUpper);
 
 // soal 2. HOF: Formatter (React style props)
-const createFormatter = (prefix) => {};
+const createFormatter = (fn, prefix) => {
+  return (text) => {
+    return `${fn(prefix)}: ${text}`;
+  };
+};
+
+const isiTeks = (teks) => teks.toUpperCase();
+
+const fnPref = createFormatter(isiTeks, "info");
+console.log(fnPref("Data berhasil disimpan"));
+
+// soal 3. HOF + Array Map
+const mapUsers = (fn, users) => {
+  return users.map((user) => {
+    return fn(user);
+  });
+};
+
+const formatArray = ({ id, name }) => ({
+  value: id,
+  username: name,
+});
+
+const users = [
+  { id: 1, name: "Andi" },
+  { id: 2, name: "Budi" },
+];
+
+const kirimArray = mapUsers(formatArray, users);
+console.log(kirimArray);
+
+// soal 4. Destructuring Parameter (Component Style)
+const UserCard = ({ id, name, isActive }) => {
+  return {
+    key: id,
+    label: `${name} ${isActive}`,
+  };
+};
+
+console.log(UserCard({ id: 1, name: "Oping", isActive: true }));
+
+// soal 5. HOF: Conditional Executor
+const executeValid = (validatorFn, value) => {
+  if (typeof value === "string") {
+    return validatorFn(value);
+  }
+
+  return `Gagal`;
+};
+
+const splitValue = (teks) => teks.split(" ");
+
+const sendFn = executeValid(
+  splitValue,
+  "Hello world, im a programmer fullstack"
+  // 123343
+);
+console.log(sendFn);
+
+// soal 6. Rest Parameter + Reduce
+const sumAll = (...number) => {
+  return number.reduce((sum, allItem) => sum + allItem, 0);
+};
+
+console.log(sumAll(30, 23, 11, 21));
+
+// soal 7. Spread + Immutable Update (React State)
+const updateStock = (dataProduct, idProd, newStocks) => {
+  return dataProduct.map((data) => {
+    if (data.id === idProd) {
+      return { ...data, stock: newStocks };
+    }
+
+    return data;
+  });
+};
+
+const products = [
+  { id: 1, name: "Laptop", stock: 10 },
+  { id: 2, name: "Mouse", stock: 5 },
+];
+
+const sendProd = updateStock(products, 2, 30);
+console.log(sendProd);
+
+// soal 8. HOF: withLogger (Wrapper Function)
+const withLogger = (fn) => {
+  return (args) => {
+    return fn(args);
+  };
+};
+
+const toUpIndex = (teks) => teks.charAt(0).toUpperCase();
+
+const sendLog = withLogger(toUpIndex);
+console.log(sendLog("Function dijalankan"));
+
+// soal 9. Filter + Map + Restructuring
+const filterRes = (dataOrder, idOrder) => {
+  return dataOrder
+    .filter((dataFilter) => dataFilter.id === idOrder)
+    .map((data) => {
+      return data;
+    });
+};
+
+const orders = [
+  { id: 1, total: 500000, status: "paid" },
+  { id: 2, total: 200000, status: "pending" },
+];
+
+const sendOrder = filterRes(orders, 1);
+console.log(sendOrder);
+
+// soal 10. Simulasi React setState (Mental Model)
+function toggleActiveButon(dataUser, targetId) {
+  return dataUser.map((data) => {
+    if (data.id === targetId) {
+      return { ...data, active: !data.active };
+    }
+
+    return data;
+  });
+}
+
+const DataUsers = [
+  { id: 1, name: "raja ayam", status: "siswa", active: true },
+  { id: 2, name: "tukang tester", status: "guru", active: false },
+  { id: 3, name: "ikan lele", status: "mahasiswa", active: true },
+];
+
+const sendActive = toggleActiveButon(DataUsers, 2);
+console.log(sendActive);
