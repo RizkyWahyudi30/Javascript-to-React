@@ -445,3 +445,100 @@ const formatHasil = (n) => `Rp${n}`;
 
 const hasilAkhir = pipeLine(541, [diTambah, diBagi, diKali, diSisabagi]);
 console.log(hasilAkhir);
+
+// 5 SOAL TERAKHIR
+
+// 1. Conditional Callback
+
+// checkLogin(.., onSuccess, onFail) -> adalah callback function nya
+function checkLogin(user, onSuccess, onFail) {
+  if (user.isLogin === true) {
+    onSuccess(user);
+  } else {
+    onFail(user);
+  }
+}
+
+// kemudian dipanggil disini
+checkLogin(
+  { username: "Rizky", isLogin: false },
+  // ini argumen callback nya (onSuccess)
+  (user) => {
+    console.log("Selamat datang", user.username);
+  },
+  // ini argumen callback nya juga (onFail)
+  () => {
+    console.log("Silakan login terlebih dahulu");
+  }
+);
+
+// 2. Callback Transformer Berantai / Callback S
+function ProcessText(text, callback1, callback2) {
+  console.log("Proses dimulai...");
+
+  setTimeout(() => {
+    // simpan data
+    const returnCallback = callback1(text);
+
+    // kirim ke callback2
+    callback2(returnCallback);
+    console.log("Proses selesai.");
+  }, 2000);
+}
+
+ProcessText(
+  "Hello world",
+  (text) => {
+    const upgradeText = text.toUpperCase();
+    console.log("Upgrade: ", upgradeText);
+
+    return upgradeText;
+  },
+  (returnData) => {
+    console.log(returnData);
+  }
+);
+
+// 3. Callback Validator + Modifier
+function updateAge(user, callback) {
+  if (user.age >= 18) {
+    callback({ ...user, status: "Adult" });
+  } else {
+    callback({ ...user, status: "Minor" });
+  }
+}
+
+updateAge({ name: "Furima", age: 12 }, (dataUser) => {
+  console.log(dataUser);
+});
+
+// 4. Async Callback Simulation
+function saveData(data, onLoading, onSuccess) {
+  onLoading();
+
+  setTimeout(() => {
+    onSuccess(data);
+
+    console.log("Save data user selesai");
+  }, 2000);
+}
+
+saveData(
+  "data user",
+  () => {
+    console.log("Proses penyimpanan...");
+  },
+  (dataUser) => {
+    console.log(dataUser);
+  }
+);
+
+// 5. React-Style setState Callback
+function setState2(prevState, callback) {
+  return callback(prevState);
+}
+
+const newState2 = setState2({ text: "Anjay bro" }, (newState) => ({
+  text: newState.text + ", WUHUUU",
+}));
+console.log(newState2);
