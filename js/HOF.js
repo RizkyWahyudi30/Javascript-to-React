@@ -139,7 +139,7 @@ const hargaFinal = transform(keRupiah, 20000);
 console.log(transform(keRupiah, 3500000));
 
 // ========================================================== //
-// LATIHA SOAL HOF
+// LATIHAN SOAL HOF
 
 // soal 1. Callback executor
 function execute(fn, value) {
@@ -161,12 +161,11 @@ const prefixFormatter = createFormatter("INFO");
 console.log(prefixFormatter("Data berhasil"));
 
 // soal 3. Array transformer
-const mapData = (data, formatterFn) => formatterFn(data);
+const mapData = (data, formatterFn) => data.map(formatterFn);
 
 const dataMapObj = [{ name: "Andi" }, { name: "Budi" }, { name: "Citra" }];
 
-const transformData = (arrData) =>
-  arrData.map(({ name }) => ({ username: name }));
+const transformData = ({ name }) => ({ username: name });
 console.log(mapData(dataMapObj, transformData));
 
 // soal 4. Logger wrapper
@@ -178,12 +177,12 @@ function WithLogger(fn) {
 }
 
 // Ini namanya -> Double Parentheses
-const returnFunc = withLogger((text) => text)("Hello World");
+const returnFunc = WithLogger((text) => text)("Hello World");
 console.log(returnFunc);
 
 // kalau yang biasanya seperti ini
 const name = (usn) => usn;
-const wrappedName = withLogger(name);
+const wrappedName = WithLogger(name);
 
 console.log(wrappedName("Riza"));
 
@@ -305,15 +304,16 @@ console.log(pipeAngka);
 const currentUser = { name: "Fuma", isAdmin: true };
 
 function withPermission(fn) {
-  if (currentUser.isAdmin === true) {
-    return fn();
-  }
+  return (...args) => {
+    if (!currentUser.isAdmin) return "Forbidden!";
+    return fn(...args);
+  };
 }
 
 const user = withPermission(() => {
   return { id: 1, name: "Admin" };
 });
-console.log(user);
+console.log(user());
 
 // soal 9. Dynamic Event Handler
 // ini reusable
