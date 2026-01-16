@@ -171,10 +171,191 @@ console.log(mapData(dataMapObj, transformData));
 
 // soal 4. Logger wrapper
 function WithLogger(fn) {
-  console.log("Function dijalankan");
-  fn();
+  return (...args) => {
+    console.log("Function dijalankan");
+    return fn(...args);
+  };
 }
 
-WithLogger(() => {
-  console.log("Funtion telah dijalankan");
+// Ini namanya -> Double Parentheses
+const returnFunc = withLogger((text) => text)("Hello World");
+console.log(returnFunc);
+
+// kalau yang biasanya seperti ini
+const name = (usn) => usn;
+const wrappedName = withLogger(name);
+
+console.log(wrappedName("Riza"));
+
+// soal 5. Conditional executor
+function executeIf(validFn, fn, value) {
+  if (validFn(value) === true) return fn(value);
+  return "Invalid";
+}
+
+// menggunakan Double Parantheses
+const isGenap = executeIf(
+  (n) => n % 2 === 0,
+  (check) => `Angka: ${check}`,
+  10
+);
+console.log(isGenap);
+
+// atau data yang lain seperti ini
+const users2 = [
+  { name: "Kuki", level: "gold", price: 130 },
+  { name: "Fukuma", level: "silver", price: 90 },
+  { name: "Kimonu", level: "AAA gold", price: 780 },
+];
+
+const applyGoldDiscount = users2.map((user) => {
+  return executeIf(
+    (us) => us.level === "gold" || us.level === "AAA gold",
+    (us) => us.price * 0.3,
+    user
+  );
 });
+
+console.log(applyGoldDiscount);
+
+// soal 6. State updater
+function setState(prevState, updaterFn) {
+  // untuk menyimpan state yang baru
+  const newState = updaterFn(prevState);
+
+  // menampilkan state yang sudah diubah dan diperbarui
+  return newState;
+}
+
+// data : Jika data objects
+let dataCurrentState1 = { count: 1, text: "Hello" };
+
+// penggunaan HOF
+dataCurrentState1 = setState(dataCurrentState1, (prevSta) => {
+  return {
+    ...prevSta,
+    text: "Hello, im Data Current 1 State",
+  };
+});
+console.log(dataCurrentState1);
+
+// data : jika data array
+let dataCurrentState2 = [102, 30, 2121, 12, "helowws"];
+
+dataCurrentState2 = setState(dataCurrentState2, (prevSate) => {
+  return [...prevSate, "Henol"];
+});
+console.log(dataCurrentState2);
+
+// data: jika data array of objects
+let dataCurrentState3 = [
+  { id: 1, name: "Andi", goal: "App Developer" },
+  { id: 2, name: "Budi", goal: "Web Developer" },
+];
+
+dataCurrentState3 = setState(dataCurrentState3, (prevData) => {
+  // return [...prevData, { goal: "Fullstack Developer" }];
+  // buat variable untuk mengirim data yang baru
+  const newItem = { id: 1, name: "Andi", goal: "Fullstack Developer" };
+
+  // cek apakah data sudah ada (UNTUK UPDATE)
+  const isExist = prevData.some((item) => item.id === newItem.id);
+
+  if (isExist) {
+    // Cek jika ada, maka update dan membuat array baru
+    return prevData.map((item) =>
+      item.id === newItem.id ? { ...item, ...newItem } : item
+    );
+  }
+
+  // Jika tidak ada, maka akan ditambahkan sebagai data baru
+  return [...prevData, newItem];
+});
+console.log(dataCurrentState3);
+
+// soal 7. Function Composer
+function pipe(value, fnArray) {
+  // variable untuk menyimpan data sementara
+  let duringData = value;
+
+  // menggunakan perulangan
+  for (let i = 0; i < fnArray.length; i++) {
+    duringData = fnArray[i](duringData);
+  }
+
+  return duringData;
+}
+
+const tambahAngka = (num) => num + 10;
+const kurangAngka = (num) => num - 5;
+const kaliAngka = (num) => num * 5;
+const bagiAngka = (num) => num / 3;
+const formatAngka = (num) => `Return: ${num}`;
+
+const pipeAngka = pipe(20, [
+  tambahAngka,
+  kurangAngka,
+  kaliAngka,
+  bagiAngka,
+  formatAngka,
+]);
+console.log(pipeAngka);
+
+// soal 8. Permission wrapper
+const currentUser = { name: "Fuma", isAdmin: true };
+
+function withPermission(fn) {
+  if (currentUser.isAdmin === true) {
+    return fn();
+  }
+}
+
+const user = withPermission(() => {
+  return { id: 1, name: "Admin" };
+});
+console.log(user);
+
+// soal 9. Dynamic Event Handler
+// ini reusable
+function createClickHandler(fn) {
+  return (id) => {
+    return fn(id);
+  };
+}
+
+const clickUser = createClickHandler((id) => {
+  console.log(`ID User: ${id}`);
+});
+clickUser(10);
+
+const cekData = createClickHandler((id) => {
+  console.log(`Profile ID User ${id}`);
+});
+cekData(11);
+
+const hapusData = createClickHandler((id) => {
+  console.log(`Hapus data ID User ${id}`);
+});
+hapusData(12);
+
+// soal 10. Mini React Mental Model | return function untuk menjalankan fn dengan log sebelum dan sesudah
+function useAction(fn) {
+  return (...args) => {
+    console.log("Sebelum dijalankan");
+
+    const res = fn(...args);
+
+    console.log("Sudah dijalankan");
+    return res;
+  };
+}
+
+const runAction = useAction((act) => {
+  console.log(act);
+
+  // ** kalau menggunakan return, maka tereksekusi nya setelah console.log sudah dijalankan
+  // return act;
+});
+runAction("Hello world, im running now");
+
+runAction(130 + 20);
