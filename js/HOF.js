@@ -371,24 +371,27 @@ function processText(text, callback) {
   return callback(text);
 }
 
-processText("Hai, aku web developer", (text) => {
-  console.log(text.toUpperCase());
+const processText1 = processText("Hai, aku web developer", (text) => {
+  return text.toUpperCase();
 });
+console.log(processText1);
 
-processText("Hai, aku Web Developer", (text) => {
-  console.log(text.split(" "));
+const processText2 = processText("Hai, aku Web Developer", (text) => {
+  return text.split(" ");
 });
+console.log(processText2);
 
-processText("Hai, aku WEB DEVELOPER", (text) => {
-  console.log(text.length);
+const processText3 = processText("Hai, aku WEB DEVELOPER", (text) => {
+  return text.length;
 });
+console.log(processText3);
 
 // soal 2. Callback Validator
 function ValidateUser(user, onSuccess, onError) {
-  if (user.username.length <= 5 || user.password.length <= 8)
-    return onError("DATA FAILED. PLEASE FILL FIELD CORRECTLY");
+  if (user.username.length > 5 && user.password.length > 8)
+    return onSuccess(user);
 
-  onSuccess(user);
+  onError("DATA FAILED. PLEASE FILL FIELD CORRECTLY");
 }
 
 ValidateUser(
@@ -411,12 +414,12 @@ function ValidateUser2(user, onSuccess, onFail) {
    */
 
   // username
-  if (user.username.length <= 5) {
+  if (user.username.length < 5) {
     return onFail("Username must be minimum 5 character");
   }
 
   // password
-  if (user.password.length <= 8) {
+  if (user.password.length < 8) {
     return onFail("Password must be minimum 8 character");
   }
 
@@ -444,7 +447,7 @@ function mapUsers(users, formatterFn) {
   // transform data
   const transformUsers = ({ id: value, name, role }) => {
     // digabungkan langsung saat proses destructuring
-    const label = `${name} - ${role}`;
+    const label = `${name}  (${role})`;
 
     // desctructuring + rename
     return formatterFn({ value, label });
@@ -496,9 +499,9 @@ function toggleUser(users, targetID) {
       const { id, name, active } = user;
 
       return {
-        userID: id,
-        username: name,
-        statusID: active,
+        id,
+        name,
+        active: !active,
       };
     }
     return user;
