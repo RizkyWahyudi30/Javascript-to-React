@@ -196,7 +196,7 @@ function executeIf(validFn, fn, value) {
 const isGenap = executeIf(
   (n) => n % 2 === 0,
   (check) => `Angka: ${check}`,
-  10
+  10,
 );
 console.log(isGenap);
 
@@ -211,7 +211,7 @@ const applyGoldDiscount = users2.map((user) => {
   return executeIf(
     (us) => us.level === "gold" || us.level === "AAA gold",
     (us) => us.price * 0.3,
-    user
+    user,
   );
 });
 
@@ -263,7 +263,7 @@ dataCurrentState3 = setState(dataCurrentState3, (prevData) => {
   if (isExist) {
     // Cek jika ada, maka update dan membuat array baru
     return prevData.map((item) =>
-      item.id === newItem.id ? { ...item, ...newItem } : item
+      item.id === newItem.id ? { ...item, ...newItem } : item,
     );
   }
 
@@ -359,3 +359,167 @@ const runAction = useAction((act) => {
 runAction("Hello world, im running now");
 
 runAction(130 + 20);
+
+//
+//
+//
+
+// LATIHAN SOAL LAGI
+
+// soal 1. Callback formatter
+function processText(text, callback) {
+  return callback(text);
+}
+
+processText("Hai, aku web developer", (text) => {
+  console.log(text.toUpperCase());
+});
+
+processText("Hai, aku Web Developer", (text) => {
+  console.log(text.split(" "));
+});
+
+processText("Hai, aku WEB DEVELOPER", (text) => {
+  console.log(text.length);
+});
+
+// soal 2. Callback Validator
+function ValidateUser(user, onSuccess, onError) {
+  if (user.username.length <= 5 || user.password.length <= 8)
+    return onError("DATA FAILED. PLEASE FILL FIELD CORRECTLY");
+
+  onSuccess(user);
+}
+
+ValidateUser(
+  { username: "user", password: "hello1212" },
+  (data) => {
+    console.log({ ...data, isValid: true });
+  },
+  (messageErr) => {
+    console.log("FAILED!", messageErr);
+  },
+);
+
+// JIKA INGIN LEBIH DETAIL BISA SEPERTI INI
+function ValidateUser2(user, onSuccess, onFail) {
+  /**
+   *
+   * @validator
+   * Cek satu satu untuk username dan password, serta memberikan response yang berbeda
+   *
+   */
+
+  // username
+  if (user.username.length <= 5) {
+    return onFail("Username must be minimum 5 character");
+  }
+
+  // password
+  if (user.password.length <= 8) {
+    return onFail("Password must be minimum 8 character");
+  }
+
+  onSuccess(user);
+}
+
+ValidateUser2(
+  { username: "admi", password: "admin12admin12" },
+  (messageSuccess) => {
+    console.log("SUCCESS, DATA!", messageSuccess);
+  },
+  (messageErr) => {
+    console.log("FAILED!", messageErr);
+  },
+);
+
+// soal 3. HOF + Array + Destructuring
+function mapUsers(users, formatterFn) {
+  /**
+   *
+   * Menggunakan metode ADAPTER PATTERN
+   *
+   */
+
+  // transform data
+  const transformUsers = ({ id: value, name, role }) => {
+    // digabungkan langsung saat proses destructuring
+    const label = `${name} - ${role}`;
+
+    // desctructuring + rename
+    return formatterFn({ value, label });
+  };
+
+  // Handling Polymorphism atau untuk menangani data berbentuk object / array of object
+  return Array.isArray(users)
+    ? users.map(transformUsers)
+    : transformUsers(users);
+}
+
+// PENGGUNAAN
+const usersObj = mapUsers(
+  { id: 1, name: "admin telkom", role: "teknisi" },
+  (item) => item,
+);
+console.log(usersObj);
+
+const usersArrObj = mapUsers(
+  [
+    { id: 1, name: "Alice", role: "Admin" },
+    { id: 2, name: "Bob", role: "Teknisi" },
+  ],
+  (item) => item,
+);
+console.log(usersArrObj);
+
+// soal 4. Rest parameter calculator
+function calculate(type, ...numbers) {
+  return (calcNum) => {
+    if (type === "sum")
+      return calcNum(numbers.reduce((total, sum) => total + sum, 0));
+    if (type === "multiply")
+      return calcNum(numbers.reduce((total, mult) => total * mult, 1));
+  };
+}
+
+// Menggunakan Double Parentheses
+const sumCalc = calculate("sum", 12, 12)((res) => res);
+console.log(sumCalc);
+
+const multiCalc = calculate("multiply", 2, 3, 4)((res) => res);
+console.log(multiCalc);
+
+// soal 5. Spread + immutable update
+function toggleUser(users, targetID) {
+  return users.map((user) => {
+    if (user.id === targetID) {
+      const { id, name, active } = user;
+
+      return {
+        userID: id,
+        username: name,
+        statusID: active,
+      };
+    }
+    return user;
+  });
+}
+
+const dataUser = toggleUser(
+  [
+    { id: 1, name: "Andi", active: false },
+    { id: 2, name: "Budi", active: false },
+  ],
+  2,
+);
+console.log(dataUser);
+
+// soal 6. Destructuring parameter (React Style)
+
+// soal 7. Callback + Conditional Flow
+
+// soal 8. HOF Logger wrapper
+
+// soal 9. Restructuring API Response
+
+// soal 10. Mini React setState + Callback
