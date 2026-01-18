@@ -14,6 +14,10 @@ Konsep dasar react dari fundemntal js (by WPU) :
 #6 Callback Function
 #7 Higher-order Function
 #8 Promise
+    - promise basic
+    - promise chaining
+    - promise error handling
+    - promise async/await
 #9 Async & Await
 #10 fetch()
 #11 axios 
