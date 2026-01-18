@@ -518,11 +518,110 @@ const dataUser = toggleUser(
 console.log(dataUser);
 
 // soal 6. Destructuring parameter (React Style)
+function useCard(props) {
+  return ({ id: key, name, email, isActive }) => {
+    const label = `${name} - ${email}`;
+
+    return props({
+      key,
+      label: label,
+      status: isActive ? "Active" : "InActive",
+    });
+  };
+}
+
+// MENGGUNAKAN DOUBLE PARENTHESES
+useCard((data) => {
+  console.log(data);
+})({
+  id: 1,
+  name: "Imai",
+  email: "imai@gmail.com",
+  isActive: true,
+});
+
+useCard((data) => {
+  console.log(data);
+})({
+  id: 2,
+  name: "Hosu",
+  email: "hosu@gmail.com",
+  isActive: false,
+});
 
 // soal 7. Callback + Conditional Flow
+function executeTask(value, onNumber, onString) {
+  if (typeof value === "number") return onNumber(value);
+
+  onString(value);
+}
+
+executeTask(
+  "hello world",
+  (dataNumber) => {
+    console.log("On-Num:", dataNumber);
+  },
+  (dataString) => {
+    console.log("On-Str:", dataString);
+  },
+);
 
 // soal 8. HOF Logger wrapper
+function WithLoggers(fn) {
+  return (...dataLog) => {
+    console.log("Start");
+    fn(...dataLog);
+    console.log("End");
+  };
+}
+
+WithLoggers((a, b, c) => {
+  console.log(a + b - c);
+})(12, 12, 32, 12);
 
 // soal 9. Restructuring API Response
+function responseApi(res) {
+  return ({
+    data: {
+      user: {
+        id,
+        full_name: name,
+        address: { city },
+      },
+    },
+  }) => {
+    return res({
+      id,
+      name,
+      city,
+    });
+  };
+}
+
+responseApi((data) => console.log(data))({
+  data: {
+    user: {
+      id: 1,
+      full_name: "angjay",
+      address: { city: "Jakarta" },
+    },
+  },
+});
 
 // soal 10. Mini React setState + Callback
+function SetState(prevState, updater) {
+  // simpan data state baru
+  const newDataState = updater(prevState);
+
+  // tampilkan
+  return newDataState;
+}
+
+console.log(
+  SetState({ id: 1, type: "Tester - 1" }, (data) => {
+    return {
+      ...data,
+      new: "new 1",
+    };
+  }),
+);
